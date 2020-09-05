@@ -17,7 +17,21 @@ Implement an endpoint `/api/fetch` that returns the contents of `data.csv` as JS
 """
 
 # your work here
+import pandas as pd
+import json
+@app.route("/api/fetch", methods=['GET'])
+def fetch():
+    data = pd.read_csv('data.csv')
+    employees = {'employees': []}
 
+    for i in data.values:
+        employee = {}
+        employee['name'] = i[1] + ' ' + i[2]
+        employee['time_zone'] = i[3]
+        employee['dept'] = i[4]
+        employees['employees'].append(employee)
+
+    return json.dumps(employees)
 """
 
 DOCUMENTATION WEBPAGE BELOW
